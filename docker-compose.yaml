@@ -1,0 +1,34 @@
+version: "2"
+services:
+  ui:
+    build: ./ui
+    ports:
+      - 80:80
+    depends_on:
+      - api
+  api:
+    build: ./api
+    ports:
+      - 8080:5555
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - gameshop-app-nw
+    env_file:
+      - ./api/env.list
+  db:
+    build: ./db
+    ports:
+      - 13306:3306
+    volumes:
+      - ./db/mysqldata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=gameshop
+    networks:
+      - gameshop-app-nw
+
+networks:
+  gameshop-app-nw:
+    driver: bridge
