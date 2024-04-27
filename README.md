@@ -20,5 +20,4 @@ You can edit the /etc/hosts file on your system to point this app to a custom do
 
 Now you can access the app from app.gameshop.com instead of localhost
 
-<img width="2051" alt="Screenshot 2024-04-28 at 03 13 26" src="https://github.com/behlkartik/gameshop-app/assets/6685443/4299092c-e099-4599-819a-26f6c499ff2a">
-
+![![alt text](<Screenshot 2024-04-28 at 03.13.26.png>)](working_app.png)
