@@ -14,8 +14,8 @@ jobs:
       uses: actions/checkout@v4
     - name: Build api docker image
       working-directory: ./api
-      run: docker build . --file Dockerfile --tag api:latest
+      run: docker build . --file Dockerfile --tag gameshop-api:latest
     - name: Docker login
       run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
     - name: Docker push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/gameshop-app
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/gameshop-api:latest
