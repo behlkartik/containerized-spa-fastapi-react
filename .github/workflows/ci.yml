@@ -24,4 +24,4 @@ jobs:
     - name: Push image to Dockerhub
       env: 
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      run: docker push $DOCKERHUB_USERNAME/gameshop-backend:tagname
+      run: docker push $DOCKERHUB_USERNAME/gameshop-backend:latest
