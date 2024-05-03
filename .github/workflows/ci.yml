@@ -9,37 +9,17 @@ jobs:
   build-and-push-api:
     runs-on: ubuntu-latest
     steps:
-    
     - name: Checkout Code
       uses: actions/checkout@v4
-    - name: Build api docker image
+    - name: Login to Dockerhub
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD 
+    - name: Build Docker Image
       working-directory: ./api
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/gameshop-api:latest
-    - name: Docker login
-      run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
-    - name: Docker push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/gameshop-api:latest
-  build-and-push-ui:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-    - name: Build ui docker image
-      working-directory: ./ui
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/gameshop-ui:latest
-    - name: Docker login
-      run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
-    - name: Docker push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/gameshop-ui:latest
-  build-and-push-db:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-    - name: Build db docker image
-      working-directory: ./db
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/gameshop-db:latest
-    - name: Docker login
-      run: docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD }}
-    - name: Docker push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/gameshop-db:latest
+      run: docker build . -f Dockerfile -t gameshop-api
+    - name: Push image to Dockerhub
+      env: 
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      run: docker push $DOCKERHUB_USERNAME/gameshop-api:latest
